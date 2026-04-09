@@ -10,5 +10,6 @@ public class Exemplo {
         valor2 = parseInt(showInputDialog("Informe o segundo valor"));
         resultado = valor1 + valor2;
         showMessageDialog(null, "resultado = " + resultado);
+
     }
 }
