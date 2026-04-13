@@ -1,6 +1,10 @@
 package br.fiap.viagem;
 
 import br.fiap.carga.Carga;
+import br.fiap.cliente.Cliente;
+
+import static java.lang.Integer.parseInt;
+import static javax.swing.JOptionPane.showInputDialog;
 
 public class Viagem {
     private double capacidade;
@@ -29,7 +33,7 @@ public class Viagem {
     public double capacidadeReservar(){
         double total = 0;
         for (int i = 0; i < index; i++) {
-            total += carga[index].getPeso();
+            total += carga[i].getPeso();
         }
         return total;
     }
@@ -40,5 +44,37 @@ public class Viagem {
             aux += carga[i].getDados();
         }
         return aux;
+    }
+
+
+    //metodo para pesquisar uma carga pelo cnpj
+    //vetor contendo as cargas estão na classe viagem, ent faz o metodo na viagem
+    public Carga pesquisaReserva(int cnpj){
+        int posicao = buscarPorIndice(cnpj);
+        if (posicao != -1){
+            return carga[posicao];
+        }
+        return null;
+    }
+
+    private int buscarPorIndice(int cnpj){
+        for(int i = 0; i < index; i++){
+            if (carga[i].getCliente().getCnpj() == cnpj){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean cancelaReserva(int cnpj){
+        int posicao = buscarPorIndice(cnpj);
+        if(posicao == -1){
+            return false;
+        }
+        else {
+            carga[posicao] = carga[index - 1];
+            index--;
+            return true;
+        }
     }
 }

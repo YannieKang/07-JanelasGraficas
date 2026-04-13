@@ -26,15 +26,30 @@ public class Util {
             else {
                 switch (opcao){
                     case 1 -> reservar();
+                    case 2 -> pesquisaReserva();
+                    case 3 -> visualizarReserva();
                     case 4 -> capacidadeReservada();
+                    case 5 -> cancelaReserva();
+                    case 6 -> showMessageDialog(null, "Até breve");
+                    default -> showMessageDialog(null, "Opção inválida");
                 }
             }
         } while (opcao != 6);
     }
 
+    private void pesquisaReserva() {
+        int cnpj = parseInt(showInputDialog("CNPJ para busca"));
+        Carga carga = viagem.pesquisaReserva(cnpj);
+        if(carga == null){
+            showMessageDialog(null, "CNPJ não encontrado");
+        }
+        else {
+            showMessageDialog(null, carga.getDados());
+        }
+    }
+
     private void capacidadeReservada() {
         showMessageDialog(null, "Capacidade atual: " + viagem.capacidadeReservar());
-
     }
 
     private void reservar() {
@@ -51,6 +66,21 @@ public class Util {
         }
         else {
             showMessageDialog(null, "Entre em contato com a administração");
+        }
+    }
+
+
+    private void visualizarReserva(){
+        showMessageDialog(null, viagem.getDados());
+    }
+
+    private void cancelaReserva(){
+        int cnpj = parseInt(showInputDialog("CNPJ para busca"));
+        if (viagem.cancelaReserva(cnpj)){
+            showMessageDialog(null, "Carga cancelada");
+        }
+        else {
+            showMessageDialog(null, "Carga não encontrada");
         }
     }
 }
